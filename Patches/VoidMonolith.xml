@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- PassThroughOnly, not Standable: pawns can path through and work from these cells (floor building under
+       the monolith, As above So below's cross-level trips to study it), but anything that searches for a
+       Standable cell still skips them. That keeps the gleaming quest's void metal masses, the collapse
+       fragments and shards, map-gen corpses and item drops out of the footprint, and keeps the core from
+       becoming an untargetable fighting position. Sight and light stay blocked (fillPercent 1 is unchanged). -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="VoidMonolith"]/passability</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>Defs/ThingDef[defName="VoidMonolith"]/passability</xpath>
+      <value>
+        <passability>PassThroughOnly</passability>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- The side, top and bottom pieces added from Stirring on. All five inherit from this abstract parent. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[@Name="VoidMonolithAttachment"]/passability</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>Defs/ThingDef[@Name="VoidMonolithAttachment"]/passability</xpath>
+      <value>
+        <passability>PassThroughOnly</passability>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Same path cost as the core (50), so pawns walk around the monolith when there's a reasonable way round. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[@Name="VoidMonolithAttachment"]</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>Defs/ThingDef[@Name="VoidMonolithAttachment"]/pathCost</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name="VoidMonolithAttachment"]</xpath>
+        <value>
+          <pathCost>50</pathCost>
+        </value>
+      </nomatch>
+    </match>
+  </Operation>
+</Patch>
