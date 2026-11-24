@@ -10,5 +10,5 @@
   <loadAfter>
     <li>ludeon.rimworld.anomaly</li>
   </loadAfter>
-  <description>Pawns can walk through the void monolith.</description>
+  <description>Pawns can walk through the void monolith and geothermal generators.</description>
 </ModMetaData>

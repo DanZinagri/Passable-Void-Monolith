@@ -39,4 +39,30 @@
       </nomatch>
     </match>
   </Operation>
+
+  <!-- Temporary stopgap for As above So below II: its cross-level fallback for jobs worked from beside a building
+       (repair, deconstruct, Fluffy Breakdowns' Maintain) only checks the 8 cells around the building's centre,
+       which are all inside a 6x6 generator. Remove once AB2 checks the whole footprint's border. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="GeothermalGenerator"]/passability</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>Defs/ThingDef[defName="GeothermalGenerator"]/passability</xpath>
+      <value>
+        <passability>PassThroughOnly</passability>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="GeothermalGenerator"]</xpath>
+    <match Class="PatchOperationConditional">
+      <xpath>Defs/ThingDef[defName="GeothermalGenerator"]/pathCost</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="GeothermalGenerator"]</xpath>
+        <value>
+          <pathCost>50</pathCost>
+        </value>
+      </nomatch>
+    </match>
+  </Operation>
 </Patch>
