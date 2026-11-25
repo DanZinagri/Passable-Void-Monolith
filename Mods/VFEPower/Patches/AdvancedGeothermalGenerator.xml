@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Same AB2 stopgap as the vanilla geothermal generator in Patches/VoidMonolith.xml: the advanced one is also
+       6x6, so AB2's cross-level fallback finds no cell to work it from. Remove once AB2 checks the footprint's border. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="VPE_AdvancedGeothermalGenerator"]/passability</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>Defs/ThingDef[defName="VPE_AdvancedGeothermalGenerator"]/passability</xpath>
+      <value>
+        <passability>PassThroughOnly</passability>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Only if it has no pathCost of its own (it sets none today). -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="VPE_AdvancedGeothermalGenerator"][not(pathCost)]</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="VPE_AdvancedGeothermalGenerator"][not(pathCost)]</xpath>
+      <value>
+        <pathCost>50</pathCost>
+      </value>
+    </match>
+  </Operation>
+</Patch>
